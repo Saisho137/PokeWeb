@@ -1,21 +1,56 @@
 package com.example.pokeweb.models;
 
+import java.util.ArrayList;
+
 public class Pokemon {
     //Variables
+    private int id;
     private String name;
-    private String url;
-    //Getters
+    private int weight;
+    private int height;
+    private ArrayList<Pokemon> types;
+    private Sprites sprites;
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getName() {
         return name;
     }
-    public String getUrl() {
-        return url;
-    }
-    //Setters
     public void setName(String name) {
         this.name = name;
     }
-    public void setUrl(String url) {
-        this.url = url;
+    public int getWeight() {
+        return weight;
+    }
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+    public int getHeight() {
+        return height;
+    }
+    public void setHeight(int height) {
+        this.height = height;
+    }
+    public Sprites getSprites() {
+        return sprites;
+    }
+    public void setSprites(Sprites sprites) {
+        this.sprites = sprites;
+    }
+    public ArrayList<Pokemon> getTypes() {
+        return types;
+    }
+    public void setTypes(ArrayList<Pokemon> types) {
+        this.types = types;
     }
 }
+class Sprites {
+    String front_default;
+    String front_shiny;
+}
+
+

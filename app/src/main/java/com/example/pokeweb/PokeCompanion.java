@@ -52,22 +52,23 @@ public class PokeCompanion extends AppCompatActivity {
 
     private void getData() {
         PokeApiService service = retrofit.create(PokeApiService.class);
-        Call<PokemonResponse> PokemonResponseCall = service.getPokemonList();
+        Call<Pokemon> PokemonCall = service.getPokemonList(1);
         Log.i("WARNING", "CODE COMES HERE.");
-        PokemonResponseCall.enqueue(new Callback<PokemonResponse>() {
+        PokemonCall.enqueue(new Callback<Pokemon>() {
             @Override
-            public void onResponse(Call<PokemonResponse> call, Response<PokemonResponse> response) {
+            public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
                 if (response.isSuccessful()) {
-                    PokemonResponse pokemonResponse = response.body();
-                    ArrayList<Pokemon> pokemonList = pokemonResponse.getResults();
-
+                    Pokemon pokemonResponse = response.body();
+                    ArrayList<Pokemon> pokemonList = new ArrayList<>();
+                    pokemonList.add(pokemonResponse);
                     pokemonListAdapter.addPokemonList(pokemonList);
+                    Log.i("Response","Contenido: " + pokemonResponse.getName() +" id: " + pokemonResponse.getId());
                 } else {
                     Log.e(TAG, "onResponse" + response.errorBody());
                 }
             }
             @Override
-            public void onFailure(Call<PokemonResponse> call, Throwable t) {
+            public void onFailure(Call<Pokemon> call, Throwable t) {
                 Log.e(TAG, "onFailure" + t.getMessage());
             }
         });

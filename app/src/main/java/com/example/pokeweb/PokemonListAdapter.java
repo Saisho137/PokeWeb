@@ -46,7 +46,6 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Pokemon p = dataset.get(position);
         Log.i("Busqueda", "position is " + position);
-        Log.i("Busqueda", "test " + dataset.get(position).getUrl());
         holder.textViewPokedex.setText(p.getName());//Setear el nombre de cada pokemon
     }
 
