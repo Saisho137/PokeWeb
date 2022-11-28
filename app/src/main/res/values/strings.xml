@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">PokeWeb</string>
+    <string name="hintEmail">Email</string>
+    <string name="hintPassword">Password</string>
+    <string name="hintPassword2">Confirm your Password</string>
+    <string name="btnLogin">Sign In</string>
+    <string name="btnRegister">Register</string>
+    <string name="tvWelcome">¡Welcome to PokeWeb!</string>
+    <string name="tvCompanions">Pokemon Companions</string>
+</resources>
