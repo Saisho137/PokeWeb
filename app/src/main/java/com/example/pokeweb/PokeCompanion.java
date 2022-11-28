@@ -30,6 +30,19 @@ public class PokeCompanion extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PokemonListAdapter pokemonListAdapter;
 
+    private ArrayList<Integer> companions;
+    public ArrayList PokemonList() {
+        companions = new ArrayList<>();
+        companions.add(25);
+        companions.add(1);
+        companions.add(4);
+        companions.add(7);
+        companions.add(390);
+        companions.add(393);
+        Log.i("Busqueda", "position is " + companions);
+        return companions;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,26 +64,28 @@ public class PokeCompanion extends AppCompatActivity {
     }
 
     private void getData() {
-        PokeApiService service = retrofit.create(PokeApiService.class);
-        Call<Pokemon> PokemonCall = service.getPokemonList(1);
-        Log.i("WARNING", "CODE COMES HERE.");
-        PokemonCall.enqueue(new Callback<Pokemon>() {
-            @Override
-            public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
-                if (response.isSuccessful()) {
-                    Pokemon pokemonResponse = response.body();
-                    ArrayList<Pokemon> pokemonList = new ArrayList<>();
-                    pokemonList.add(pokemonResponse);
-                    pokemonListAdapter.addPokemonList(pokemonList);
-                    Log.i("Response","Contenido: " + pokemonResponse.getName() +" id: " + pokemonResponse.getId());
-                } else {
-                    Log.e(TAG, "onResponse" + response.errorBody());
+        for (int i = 0 ; i < PokemonList().size(); i++){
+            PokeApiService service = retrofit.create(PokeApiService.class);
+            Call<Pokemon> PokemonCall = service.getPokemonList((Integer) PokemonList().get(i));
+            Log.i("WARNING", "CODE COMES HERE.");
+            PokemonCall.enqueue(new Callback<Pokemon>() {
+                @Override
+                public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
+                    if (response.isSuccessful()) {
+                        Pokemon pokemonResponse = response.body();
+                        ArrayList<Pokemon> pokemonList = new ArrayList<>();
+                        pokemonList.add(pokemonResponse);
+                        pokemonListAdapter.addPokemonList(pokemonList);
+                        Log.i("Response","Contenido: " + pokemonResponse.getName() +" id: " + pokemonResponse.getId());
+                    } else {
+                        Log.e(TAG, "onResponse" + response.errorBody());
+                    }
                 }
-            }
-            @Override
-            public void onFailure(Call<Pokemon> call, Throwable t) {
-                Log.e(TAG, "onFailure" + t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<Pokemon> call, Throwable t) {
+                    Log.e(TAG, "onFailure" + t.getMessage());
+                }
+            });
+        }
     }
 }

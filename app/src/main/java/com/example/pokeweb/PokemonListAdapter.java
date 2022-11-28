@@ -18,22 +18,9 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
     private ArrayList<Pokemon> dataset;
 
-    private ArrayList<Integer> companions;
-
     public PokemonListAdapter() {
         dataset = new ArrayList<>();
     }
-
-    public ArrayList PokemonList() {
-        companions = new ArrayList<>();
-        companions.add(19);
-        companions.add(1);
-        companions.add(4);
-        companions.add(7);
-        Log.i("Busqueda", "position is " + companions);
-        return companions;
-    }
-
 
     @NonNull
     @Override
@@ -46,8 +33,11 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Pokemon p = dataset.get(position);
         Log.i("Busqueda", "position is " + position);
-        holder.textViewPokedex.setText(p.getName());//Setear el nombre de cada pokemon
+        String firsCapitalLetter = p.getName().toUpperCase().charAt(0) + p.getName().substring(1).toLowerCase();
+        holder.textViewPokedex.setText( firsCapitalLetter );//Setear el nombre de cada pokemon
+        holder.textViewId.setText("#"+p.getId());
     }
+
 
     @Override
     public int getItemCount() {
@@ -63,12 +53,14 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
 
         private ImageView imageView;
         private TextView textViewPokedex;
+        private TextView textViewId;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.imageView);
             textViewPokedex = itemView.findViewById(R.id.textViewPokedex);
+            textViewId = itemView.findViewById(R.id.textViewId);
         }
 
     }
