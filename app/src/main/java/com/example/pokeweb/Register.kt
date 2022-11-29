@@ -10,10 +10,14 @@ class Register : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        val goSignIn = findViewById<Button>(R.id.btnSignR)
+        val goSignIn = findViewById<Button>(R.id.btnSignReg)
+        val userRegister = findViewById<Button>(R.id.btnRegistReg)
 
         goSignIn.setOnClickListener{
             startActivity(Intent(this,MainActivity::class.java))
+        }
+        userRegister.setOnClickListener{
+            startActivity(Intent(this,PokeCompanion::class.java))
         }
     }
 }

@@ -11,10 +11,9 @@
     <TextView
         android:id="@+id/textViewR"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:autoSizeTextType="uniform"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:textSize="28sp"
+        android:layout_marginTop="80dp"
         android:gravity="center"
         android:textColor="@color/white"
         android:text="@string/tvWelcome"
@@ -27,7 +26,9 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginTop="50dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,9 +37,15 @@
         <EditText
             android:id="@+id/tbEmailR"
             android:layout_width="match_parent"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:layout_height="50dp"
             android:autofillHints=""
-            android:ems="20"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_edit_text"
             android:hint="@string/hintEmail"
             android:inputType="textEmailAddress"
             android:textColorHint="#c0c0c0" />
@@ -48,33 +55,47 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:autofillHints=""
-            android:ems="20"
+            android:textColor="@color/white"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:background="@drawable/rounded_edit_text"
             android:hint="@string/hintPassword"
             android:inputType="textPassword"
-            android:textColorHint="#c0c0c0"/>
+            android:textColorHint="#c0c0c0" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
 
             <Button
                 android:id="@+id/btnSignR"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/white"
-                android:text="@string/btnLogin" />
+                android:textSize="18sp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/rounded_button"
+                android:text="@string/btnLogin"
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/btnRegistR"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:textSize="12sp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/white"
-                android:text="@string/btnRegister" />
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:text="@string/btnRegister2"
+                android:textColor="@color/white" />
         </LinearLayout>
 
     </LinearLayout>
