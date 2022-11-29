@@ -1,5 +1,6 @@
 package com.example.pokeweb;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.pokeweb.models.Pokemon;
 
 import java.util.ArrayList;
@@ -17,8 +20,10 @@ import java.util.ArrayList;
 public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.ViewHolder> {
 
     private ArrayList<Pokemon> dataset;
+    private Context context;
 
-    public PokemonListAdapter() {
+    public PokemonListAdapter(Context context) {
+        this.context = context;
         dataset = new ArrayList<>();
     }
 
@@ -32,10 +37,14 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Pokemon p = dataset.get(position);
-        Log.i("Busqueda", "position is " + position);
+
         String firsCapitalLetter = p.getName().toUpperCase().charAt(0) + p.getName().substring(1).toLowerCase();
         holder.textViewPokedex.setText( firsCapitalLetter );//Setear el nombre de cada pokemon
-        holder.textViewId.setText("#"+p.getId());
+        holder.textViewId.setText("#" + p.getId());
+
+        Glide.with(context)
+                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + p.getId() + ".png")
+                .into(holder.imageView);
     }
 
 

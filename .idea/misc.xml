@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/SantiagoPC/AndroidStudioProjects/PokeWeb/app/src/main/res/drawable/gradient_pokeball.xml" value="0.386" />
+        <entry key="..\:/Users/SantiagoPC/AndroidStudioProjects/PokeWeb/app/src/main/res/drawable/rounded.xml" value="0.386" />
+        <entry key="..\:/Users/SantiagoPC/AndroidStudioProjects/PokeWeb/app/src/main/res/drawable/roundedname.xml" value="0.386" />
         <entry key="..\:/Users/SantiagoPC/AndroidStudioProjects/PokeWeb/app/src/main/res/layout/activity_companions.xml" value="0.3729166666666667" />
         <entry key="..\:/Users/SantiagoPC/AndroidStudioProjects/PokeWeb/app/src/main/res/layout/activity_main.xml" value="0.38697916666666665" />
         <entry key="..\:/Users/SantiagoPC/AndroidStudioProjects/PokeWeb/app/src/main/res/layout/activity_poke_companion.xml" value="0.38697916666666665" />

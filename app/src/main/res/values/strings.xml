@@ -7,4 +7,5 @@
     <string name="btnRegister">Register</string>
     <string name="tvWelcome">¡Welcome to PokeWeb!</string>
     <string name="tvCompanions">Pokemon Companions</string>
+    <string name="numPoke">999</string>
 </resources>

@@ -39,6 +39,11 @@ public class PokeCompanion extends AppCompatActivity {
         companions.add(7);
         companions.add(390);
         companions.add(393);
+        companions.add(150);
+        companions.add(151);
+        companions.add(493);
+        companions.add(483);
+        companions.add(890);
         Log.i("Busqueda", "position is " + companions);
         return companions;
     }
@@ -49,7 +54,7 @@ public class PokeCompanion extends AppCompatActivity {
         setContentView(R.layout.activity_poke_companion);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        pokemonListAdapter = new PokemonListAdapter();
+        pokemonListAdapter = new PokemonListAdapter(this);
         recyclerView.setAdapter(pokemonListAdapter);
         recyclerView.setHasFixedSize(true);
         GridLayoutManager layoutManager = new GridLayoutManager(this,3);
