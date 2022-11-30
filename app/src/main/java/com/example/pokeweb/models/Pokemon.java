@@ -9,7 +9,6 @@ public class Pokemon {
     private int weight;
     private int height;
     private ArrayList<Pokemon> types;
-    private Sprites sprites;
 
     public int getId() {
         return id;
@@ -35,12 +34,6 @@ public class Pokemon {
     public void setHeight(int height) {
         this.height = height;
     }
-    public Sprites getSprites() {
-        return sprites;
-    }
-    public void setSprites(Sprites sprites) {
-        this.sprites = sprites;
-    }
     public ArrayList<Pokemon> getTypes() {
         return types;
     }
@@ -48,9 +41,6 @@ public class Pokemon {
         this.types = types;
     }
 }
-class Sprites {
-    String front_default;
-    String front_shiny;
-}
+
 
 

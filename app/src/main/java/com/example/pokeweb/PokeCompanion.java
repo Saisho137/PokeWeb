@@ -4,10 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.pokeweb.models.Companions;
+import com.example.pokeweb.models.CompanionsResponse;
 import com.example.pokeweb.models.Pokemon;
+import com.example.pokeweb.pokeApi.MyApiService;
 import com.example.pokeweb.pokeApi.PokeApiService;
 
 import java.util.ArrayList;
@@ -28,21 +32,7 @@ public class PokeCompanion extends AppCompatActivity {
     private PokemonListAdapter pokemonListAdapter;
 
     private ArrayList<Integer> companions;
-    public ArrayList PokemonList() {
-        companions = new ArrayList<>();
-        companions.add(25);
-        companions.add(1);
-        companions.add(4);
-        companions.add(7);
-        companions.add(390);
-        companions.add(393);
-        companions.add(150);
-        companions.add(151);
-        companions.add(493);
-        companions.add(483);
-        companions.add(890);
-        return companions;
-    }
+    private IdCompanionDTO idCompanionDTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,18 +46,33 @@ public class PokeCompanion extends AppCompatActivity {
         GridLayoutManager layoutManager = new GridLayoutManager(this,3);
         recyclerView.setLayoutManager(layoutManager);
 
-
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://pokeapi.co/api/v2/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        getData();
+        //Declaration Object
+        idCompanionDTO = new IdCompanionDTO(this);
+        companions = new ArrayList<>();
+        //debug
+        Log.e("Response List ID 3","Content 2: " + idCompanionDTO.getIdList() );
+        //Validation and default Pokemon (Pikachu = 25)
+        if (idCompanionDTO.getIdList().isEmpty()){
+            companions.add(25);
+            getData(companions);
+            Log.e("Response List ID 2","Content Fail: " + idCompanionDTO.getIdList() );
+        }else{
+            companions.addAll( idCompanionDTO.getIdList() );
+            getData(companions);
+            Log.i("Response List ID 1","Content Success: " + idCompanionDTO.getIdList() );
+        }
+        //
+
     }
 
-    private void getData() {
-        for (int i = 0 ; i < PokemonList().size(); i++){
+    private void getData(ArrayList<Integer> comp) {
+        for (int i = 0 ; i < comp.size(); i++){
             PokeApiService service = retrofit.create(PokeApiService.class);
-            Call<Pokemon> PokemonCall = service.getPokemonList((Integer) PokemonList().get(i));
+            Call<Pokemon> PokemonCall = service.getPokemonList((Integer) comp.get(i));
             PokemonCall.enqueue(new Callback<Pokemon>() {
                 @Override
                 public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
@@ -76,7 +81,7 @@ public class PokeCompanion extends AppCompatActivity {
                         ArrayList<Pokemon> pokemonList = new ArrayList<>();
                         pokemonList.add(pokemonResponse);
                         pokemonListAdapter.addPokemonList(pokemonList);
-                        //Log.i("Response","Contenido: " + pokemonResponse.getName() +" id: " + pokemonResponse.getId());
+                        //Log.i("Response","Content: " + pokemonResponse.getName() +" id: " + pokemonResponse.getId());
                     } else {
                         Log.e(TAG, "onResponse" + response.errorBody());
                     }

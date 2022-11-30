@@ -1,5 +1,7 @@
 package com.example.pokeweb.pokeApi
 
+import com.example.pokeweb.models.Companions
+import com.example.pokeweb.models.CompanionsResponse
 import com.example.pokeweb.models.UserInfo
 import com.example.pokeweb.models.UserInfoResponse
 import retrofit2.Call
@@ -11,4 +13,6 @@ interface MyApiService {
     fun confirmUser(@Body userData: UserInfo): Call<UserInfoResponse>
     @POST("registrarUsuario")
     fun registerUser(@Body userData: UserInfo): Call<UserInfoResponse>
+    @POST("requestCompanion")
+    fun requestCompanion(@Body userData: Companions): Call<CompanionsResponse>
 }
