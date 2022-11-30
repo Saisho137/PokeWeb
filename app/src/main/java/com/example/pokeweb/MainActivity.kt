@@ -1,12 +1,13 @@
 package com.example.pokeweb
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import com.example.pokeweb.models.UserInfo
+import com.example.pokeweb.models.UserInfoResponse
 import com.example.pokeweb.pokeApi.MyApiService
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         .baseUrl("https://e2df-2800-e2-280-a76-c9f-58e7-7165-ce5a.ngrok.io/api/PokeWeb/api/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+
     private val service: MyApiService = retrofit.create(MyApiService::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,47 +32,50 @@ class MainActivity : AppCompatActivity() {
         val goPokeCompanion = findViewById<Button>(R.id.btnSignR)
         //EditText
         val emailTb = findViewById<EditText>(R.id.tbEmailR)//EditText variable
-        val email = emailTb.text.toString().trim()//Text email String
         val passTb = findViewById<EditText>(R.id.tbPassR)//EditText variable
-        val pass = passTb.text.toString().trim()//Text password String
         //Buttons Functions
         goRegister.setOnClickListener{
             startActivity(Intent(this,Register::class.java))
         }
+        //ApiRest
         goPokeCompanion.setOnClickListener{
+            val email: String = emailTb.text.toString()//Text email String
+            val pass: String = passTb.text.toString()//Text password String
             //Validations
-            /*if(email.isEmpty()){
+            if( email.isEmpty() || pass.isEmpty() ){
                 emailTb.error = "Email required"
-                return@setOnClickListener}
-            if(pass.isEmpty()){
                 passTb.error = "Password required"
-                return@setOnClickListener }*/
+                return@setOnClickListener }
             //
+            Log.i("TEST","content editText2: $email & $pass")
+            //Object with typed content
             val userInfo = UserInfo(
                 emailUser = email,
                 userPassword = pass
-            ) //Object with typed content
+            )
             //
-            getConfirmUser(userInfo)//Returns boolean
-            //
-            startActivity(Intent(this,PokeCompanion::class.java))//go to PokeCompanion Section
-        }//ApiRest
+            getConfirmUser(userInfo)
+        }
     }
 
     private fun getConfirmUser(userData: UserInfo) {
 
         val call = service.confirmUser(userData)
 
-        call.enqueue(object : Callback<UserInfo>{
-            override fun onResponse(call: Call<UserInfo>,response: Response<UserInfo>) {
-                val confirm = response.body()
-                Log.i("TEST","content: $confirm")
+        call.enqueue(
+            object : Callback<UserInfoResponse>
+            {
+            override fun onResponse(call: Call<UserInfoResponse>,response: Response<UserInfoResponse>) {
+                val confirm = response.body().confirmation
+                Log.i("TEST","content Response: $confirm")
+                if (confirm != null) {
+                    startActivity(Intent(this@MainActivity,PokeCompanion::class.java))//go to PokeCompanion Section
+                }
             }
-            override fun onFailure(call: Call<UserInfo>, t: Throwable) {
+            override fun onFailure(call: Call<UserInfoResponse>, t: Throwable) {
                 Log.e("ERROR","DOESN'T WORK")
                 call.cancel()
             }
         })
-
     }
 }

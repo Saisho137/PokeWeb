@@ -6,11 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.util.LogPrinter;
-import android.widget.GridLayout;
 
 import com.example.pokeweb.models.Pokemon;
-import com.example.pokeweb.models.PokemonResponse;
 import com.example.pokeweb.pokeApi.PokeApiService;
 
 import java.util.ArrayList;
