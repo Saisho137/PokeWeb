@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pokeweb.models.Companions
-import com.example.pokeweb.models.CompanionsResponse
 import com.example.pokeweb.models.UserInfo
 import com.example.pokeweb.models.UserInfoResponse
 import com.example.pokeweb.pokeApi.MyApiService
@@ -26,9 +25,6 @@ class MainActivity : AppCompatActivity() {
 
     private val service: MyApiService = retrofit.create(MyApiService::class.java)
 
-    //Global Id Pokemon List
-    val id = IdCompanionDTO(this)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -44,8 +40,11 @@ class MainActivity : AppCompatActivity() {
         }
         //ApiRest
         goPokeCompanion.setOnClickListener{
+            //TextContent EditText
             val email: String = emailTb.text.toString()//Text email String
             val pass: String = passTb.text.toString()//Text password String
+            //Global Companion Email
+            emailCompanion.contentEditText = email
             //Validations
             if( email.isEmpty() || pass.isEmpty() ){
                 emailTb.error = "Email required"
@@ -66,32 +65,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-     fun getIdCompanion(userData: Companions) {
-
-        val call = service.requestCompanion(userData)
-
-        call.enqueue(
-            object : Callback<CompanionsResponse>
-            {
-                override fun onResponse(call: Call<CompanionsResponse>,response: Response<CompanionsResponse>) {
-                    val confirm = response.body().idCompanion
-                    if (confirm != null) {
-                        id.idList.addAll(confirm)
-                        Log.i("TEST SET ID","content Get Id Confirm: $confirm")
-                        Log.i("TEST SET ID","Global Before Start Activity: ${id.idList}")
-                        startActivity(Intent(this@MainActivity,PokeCompanion::class.java))//go to PokeCompanion Section
-                    }else  {
-                        Log.e("TEST ID","NOT RESPONSE: $confirm")
-                    }
-                }
-                override fun onFailure(call: Call<CompanionsResponse>, t: Throwable) {
-                    Log.e("ERROR ID","DOESN'T WORK")
-                    call.cancel()
-                }
-            }
-        )
-    }
-
      private fun getConfirmUser(userData: UserInfo, userId: Companions) {
 
         val call = service.confirmUser(userData)
@@ -103,7 +76,8 @@ class MainActivity : AppCompatActivity() {
                 val confirm = response.body().confirmation
                 Log.i("TEST","content Login Response: $confirm")
                 if (confirm != null && confirm == true) {
-                    getIdCompanion(userId)
+                    //getIdCompanion(userId)
+                    startActivity(Intent(this@MainActivity,PokeCompanion::class.java))//go to PokeCompanion Section
                 }else{
                     Log.e("ERROR","SOMETHING WENT WRONG")
                 }

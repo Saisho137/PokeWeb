@@ -4,15 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.EditText;
 
 import com.example.pokeweb.models.Companions;
 import com.example.pokeweb.models.CompanionsResponse;
 import com.example.pokeweb.models.Pokemon;
 import com.example.pokeweb.pokeApi.MyApiService;
 import com.example.pokeweb.pokeApi.PokeApiService;
+import com.example.pokeweb.MainActivity;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PokeCompanion extends AppCompatActivity {
 
     private Retrofit retrofit;
+    private Retrofit retrofit2;
 
     private static final String TAG = "POKEDEX";
 
@@ -32,13 +34,17 @@ public class PokeCompanion extends AppCompatActivity {
     private PokemonListAdapter pokemonListAdapter;
 
     private ArrayList<Integer> companions;
-    private IdCompanionDTO idCompanionDTO;
+    //private IdCompanionDTO idCompanionDTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_poke_companion);
 
+        //EditText
+        //EditText emailTb = findViewById(R.id.tbEmailR);//EditText variable
+
+        //recyclerView
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         pokemonListAdapter = new PokemonListAdapter(this);
         recyclerView.setAdapter(pokemonListAdapter);
@@ -46,27 +52,26 @@ public class PokeCompanion extends AppCompatActivity {
         GridLayoutManager layoutManager = new GridLayoutManager(this,3);
         recyclerView.setLayoutManager(layoutManager);
 
+        //Declarations
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://pokeapi.co/api/v2/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        //Declaration Object
-        idCompanionDTO = new IdCompanionDTO(this);
-        companions = new ArrayList<>();
-        //debug
-        Log.e("Response List ID 3","Content 2: " + idCompanionDTO.getIdList() );
-        //Validation and default Pokemon (Pikachu = 25)
-        if (idCompanionDTO.getIdList().isEmpty()){
-            companions.add(25);
-            getData(companions);
-            Log.e("Response List ID 2","Content Fail: " + idCompanionDTO.getIdList() );
-        }else{
-            companions.addAll( idCompanionDTO.getIdList() );
-            getData(companions);
-            Log.i("Response List ID 1","Content Success: " + idCompanionDTO.getIdList() );
-        }
-        //
 
+        retrofit2= new Retrofit.Builder()
+                .baseUrl("https://b321-2800-e2-280-a76-2840-f00a-32b5-5052.ngrok.io/api/PokeWeb/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        companions = new ArrayList<>();
+
+        //Send Companions Package
+        String email = emailCompanion.contentEditText;
+        String emailUser;
+        Companions userId = new Companions( emailUser = email );
+
+        //Render All
+        getIdCompanion(userId);
     }
 
     private void getData(ArrayList<Integer> comp) {
@@ -92,5 +97,29 @@ public class PokeCompanion extends AppCompatActivity {
                 }
             });
         }
+    }
+    private void getIdCompanion(Companions userData) {
+        MyApiService service = retrofit2.create(MyApiService.class);
+        Call<CompanionsResponse> call = service.requestCompanion(userData);
+
+        call.enqueue( new  Callback<CompanionsResponse>() {
+            @Override
+            public void onResponse(Call<CompanionsResponse> call, Response<CompanionsResponse> response) {
+            ArrayList<Integer> confirm = response.body().getIdCompanion();
+            if (confirm != null) {
+                companions.addAll(confirm);
+                Log.i("TEST SET ID","content Get Id Confirm: " + confirm);
+                Log.i("TEST SET ID","Global Before Start Activity: " + companions);
+            }  else  {
+                Log.e("TEST ID","NOT RESPONSE: " + null);
+                companions.add(25);
+            }
+                getData(companions);
+            }
+            @Override
+            public void onFailure(Call<CompanionsResponse> call, Throwable t) {
+                    Log.e(TAG, "onFailure" + t.getMessage());
+            }
+        });
     }
 }
