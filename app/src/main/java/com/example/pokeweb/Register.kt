@@ -17,7 +17,7 @@ class Register : AppCompatActivity() {
             startActivity(Intent(this,MainActivity::class.java))
         }
         userRegister.setOnClickListener{
-            startActivity(Intent(this,PokeCompanion::class.java))
+            startActivity(Intent(this,MainActivity::class.java))
         }
     }
 }

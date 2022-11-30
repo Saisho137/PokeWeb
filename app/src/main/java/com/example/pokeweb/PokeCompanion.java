@@ -44,7 +44,6 @@ public class PokeCompanion extends AppCompatActivity {
         companions.add(493);
         companions.add(483);
         companions.add(890);
-        Log.i("Busqueda", "position is " + companions);
         return companions;
     }
 
@@ -72,7 +71,6 @@ public class PokeCompanion extends AppCompatActivity {
         for (int i = 0 ; i < PokemonList().size(); i++){
             PokeApiService service = retrofit.create(PokeApiService.class);
             Call<Pokemon> PokemonCall = service.getPokemonList((Integer) PokemonList().get(i));
-            Log.i("WARNING", "CODE COMES HERE.");
             PokemonCall.enqueue(new Callback<Pokemon>() {
                 @Override
                 public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
@@ -81,7 +79,7 @@ public class PokeCompanion extends AppCompatActivity {
                         ArrayList<Pokemon> pokemonList = new ArrayList<>();
                         pokemonList.add(pokemonResponse);
                         pokemonListAdapter.addPokemonList(pokemonList);
-                        Log.i("Response","Contenido: " + pokemonResponse.getName() +" id: " + pokemonResponse.getId());
+                        //Log.i("Response","Contenido: " + pokemonResponse.getName() +" id: " + pokemonResponse.getId());
                     } else {
                         Log.e(TAG, "onResponse" + response.errorBody());
                     }
